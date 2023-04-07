@@ -30,7 +30,11 @@ FROM build AS publish
 ARG BuildConfiguration
 RUN dotnet publish "Tgs.MemoNotify.csproj" -c $BuildConfiguration -o /app/publish /p:UseAppHost=false
 
+FROM busybox AS cert
+RUN wget https://s3.amazonaws.com/rds-downloads/rds-combined-ca-bundle.pem
+
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
+COPY --from=cert rds-combined-ca-bundle.pem /etc/ssl/certs/
 ENTRYPOINT ["dotnet", "Tgs.MemoNotify.dll"]
