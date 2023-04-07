@@ -97,7 +97,7 @@ deploy-dev:
   when: on_success
   script:
     - |
-      cat << EOF | deploy_k8s $TgsSettingKey $HelmTemplateFolderName $namespace -
+      cat << EOF | deploy_k8s $TgsSettingKey $HelmTemplateFolderName $namespace 
         {
           "enabled": true,
           "hosts": [
@@ -131,7 +131,7 @@ deploy-staging:
   when: manual
   script:
     - |
-      cat << EOF | deploy_k8s $TgsSettingKey $HelmTemplateFolderName $namespace -
+      cat << EOF | deploy_k8s $TgsSettingKey $HelmTemplateFolderName $namespace 
         {
           "enabled": true,
           "hosts": [
@@ -165,7 +165,7 @@ deploy-prod:
   when: manual
   script:
     - |
-      cat << EOF | deploy_k8s $TgsSettingKey $HelmTemplateFolderName $namespace -
+      cat << EOF | deploy_k8s $TgsSettingKey $HelmTemplateFolderName $namespace 
         {
           "enabled": true,
           "hosts": [
