@@ -60,7 +60,7 @@ push-k8s-template:
           "tolerations": [$dedicated],
           "resources": $resources,
           "autoscaling": $autoscaling,
-          "ingress": ${ingressSettings:={}}
+          "ingress": ${ingressSettings:=\{\}}
         }
       EOF
 
@@ -75,7 +75,7 @@ push-k8s-template:
           "tolerations": [$dedicated],
           "resources": $resources,
           "autoscaling": $autoscaling,
-          "ingress": ${ingressSettings:={}}
+          "ingress": ${ingressSettings:=\{\}}
         }
       EOF
       }
