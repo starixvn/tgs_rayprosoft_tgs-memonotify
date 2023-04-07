@@ -12,6 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="FluentdForward.OpenTelemetry.MessagePack" Version="0.2.0" />
     <PackageReference Include="Google.Protobuf" Version="3.22.1" />
     <PackageReference Include="Grpc.Tools" Version="2.52.0">
       <PrivateAssets>all</PrivateAssets>
@@ -24,6 +25,11 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+    <PackageReference Include="OpenTelemetry.Exporter.OpenTelemetryProtocol" Version="1.4.0" />
+    <PackageReference Include="OpenTelemetry.Extensions.Hosting" Version="1.4.0" />
+    <PackageReference Include="OpenTelemetry.Instrumentation.AspNetCore" Version="1.0.0-rc9.14" />
+    <PackageReference Include="OpenTelemetry.Instrumentation.Runtime" Version="1.0.0" />
+    <PackageReference Include="ProfileViewer.OpenTelemetry.Exporter" Version="0.2.1" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
     <PackageReference Include="Telegram.Bot" Version="18.0.0" />
     <PackageReference Include="Tgs.GameServer.Client" Version="0.0.3" />
@@ -32,6 +38,10 @@
 
   <ItemGroup>
     <Protobuf Include="Protos\schedule.proto" GrpcServices="None" Access="Public" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="wwwroot\" />
   </ItemGroup>
 
 </Project>
