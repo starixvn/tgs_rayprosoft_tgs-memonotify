@@ -6,5 +6,8 @@
         "browser_client/models": true,
         "browser_client/services": true,
         "browser_client/test": true
-    }
+    },
+    "yaml.customTags": [
+        "!reference sequence"
+    ]
 }

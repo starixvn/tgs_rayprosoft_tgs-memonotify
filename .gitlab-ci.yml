@@ -34,8 +34,54 @@ push-docker-image:
 push-k8s-template:
   extends: .push-k8s-template
 
-deploy-dev:
+.deploy-ingress-template:
   extends: .deploy-template
+  before_script:
+    - !reference [.deploy-template before_script]
+    - |
+      function deploy_k8s() {
+        local settingKey=$1
+        local helmFolderName=$2
+        local ns=$3
+        local ingressSettings=$4
+
+        local resources=$(kubectl get cm resources-setting -o jsonpath={.data.${settingKey:=$TgsSettingKey}})
+        local dedicated=$(kubectl get cm tgs-settings -o jsonpath={.data.dedicated})
+        local node_selector=$(kubectl get cm tgs-settings -o jsonpath={.data.node-selector})
+        local autoscaling=$(kubectl get cm autoscaling-setting -o jsonpath={.data.${settingKey:=$TgsSettingKey}})
+
+        cat << EOF | yq e -P | helm template artifacts/k8s/${helmFolderName:=$HelmTemplateFolderName} \
+          -n ${ns:$namespace} \
+          --name-template tgs \
+          -f - 
+        {
+          "replicaCount": $replica,
+          "nodeSelector": $node_selector,
+          "tolerations": [$dedicated],
+          "resources": $resources,
+          "autoscaling": $autoscaling,
+          "ingress": ${ingressSettings:={}}
+        }
+      EOF
+
+        cat << EOF | yq e -P | helm template artifacts/k8s/${helmFolderName:=$HelmTemplateFolderName} \
+          -n ${ns:$namespace} \
+          --name-template tgs \
+          -f - \
+          | kubectl -n ${ns:$namespace} apply -f -
+        {
+          "replicaCount": $replica,
+          "nodeSelector": $node_selector,
+          "tolerations": [$dedicated],
+          "resources": $resources,
+          "autoscaling": $autoscaling,
+          "ingress": ${ingressSettings:={}}
+        }
+      EOF
+      }
+
+deploy-dev:
+  extends: .deploy-ingress-template
   variables:
     namespace: dev
     kube_config: KubeConfig_Raypro_dev
@@ -49,9 +95,27 @@ deploy-dev:
   only:
     - main
   when: on_success
+  script:
+    - |
+      cat << EOF | deploy_k8s $TgsSettingKey $HelmTemplateFolderName $namespace -
+        {
+          "enabled": true,
+          "hosts": [
+            {
+              "host": "dev-memo.rpgp.cc",
+              "paths": [
+                {
+                  "path": "/",
+                  "pathType": "Prefix"
+                }
+              ]
+            }
+          ]
+        }
+      EOF
 
 deploy-staging:
-  extends: .deploy-template
+  extends: .deploy-ingress-template
   variables:
     namespace: staging
     kube_config: KubeConfig_Raypro_staging
@@ -65,9 +129,27 @@ deploy-staging:
   only:
     - main
   when: manual
+  script:
+    - |
+      cat << EOF | deploy_k8s $TgsSettingKey $HelmTemplateFolderName $namespace -
+        {
+          "enabled": true,
+          "hosts": [
+            {
+              "host": "stg-memo.rpgp.cc",
+              "paths": [
+                {
+                  "path": "/",
+                  "pathType": "Prefix"
+                }
+              ]
+            }
+          ]
+        }
+      EOF
 
 deploy-prod:
-  extends: .deploy-template
+  extends: .deploy-ingress-template
   variables:
     namespace: prod
     kube_config: KubeConfig_Raypro_prod
@@ -81,3 +163,21 @@ deploy-prod:
   only:
     - main
   when: manual
+  script:
+    - |
+      cat << EOF | deploy_k8s $TgsSettingKey $HelmTemplateFolderName $namespace -
+        {
+          "enabled": true,
+          "hosts": [
+            {
+              "host": "memo.srvptt.com",
+              "paths": [
+                {
+                  "path": "/",
+                  "pathType": "Prefix"
+                }
+              ]
+            }
+          ]
+        }
+      EOF
