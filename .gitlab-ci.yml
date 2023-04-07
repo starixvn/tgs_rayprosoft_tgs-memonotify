@@ -37,7 +37,7 @@ push-k8s-template:
 .deploy-ingress-template:
   extends: .deploy-template
   before_script:
-    - !reference [.deploy-template before_script]
+    - !reference [.deploy-template, before_script]
     - |
       function deploy_k8s() {
         local settingKey=$1
