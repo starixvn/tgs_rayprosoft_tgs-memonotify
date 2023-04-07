@@ -4,14 +4,19 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.AspNetCore.TestHost;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 
 namespace Tgs.MemoNotify.IntegrationTests;
 
 internal static class TestSchedulerApplication
 {
-	public static IHostBuilder Builder => new SchedulerApplication()
-		.Builder;
+	public static IHostBuilder Builder => new SchedulerApplication().Builder
+		.ConfigureLogging(logging => logging.ClearProviders())
+		.ConfigureAppConfiguration(configBuilder => configBuilder.Sources.Clear())
+		.ConfigureServices(services => services
+			.AddFakeNatsMessageQueue());
 
 	internal static IHostBuilder UseTestChannelServer(this IHostBuilder hostBuilder, string channelName)
 	{

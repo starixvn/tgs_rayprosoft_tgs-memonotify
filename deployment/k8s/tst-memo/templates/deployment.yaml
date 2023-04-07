@@ -40,6 +40,11 @@ spec:
               valueFrom:
                 fieldRef:
                   fieldPath: status.hostIP
+            - name: ConnectionStrings__Nats
+              valueFrom:
+                secretKeyRef:
+                  name: tgs-connections
+                  key: nats
           ports:
             - name: http
               containerPort: {{ .Values.service.port }}
