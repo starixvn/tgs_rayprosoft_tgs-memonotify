@@ -9,6 +9,7 @@ namespace Tgs.MemoNotify.Controller;
 public class SchedulerController : ControllerBase
 {
 	[HttpPut]
+	[Produces("application/json")]
 	public string ScheduleNotify(
 		IBackgroundJobClient backgroundJobClient,
 		MemoViewModel viewModel)
