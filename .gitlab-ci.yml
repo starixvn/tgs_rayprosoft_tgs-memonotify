@@ -63,7 +63,7 @@ push-k8s-template:
         )
 
         echo $valueConfig $extendSettings | jq -s 'reduce .[] as $item ({}; . * $item)' \
-          echo $(</dev/stdin) | yq e -P | helm template artifacts/k8s/${helmFolderName:=$HelmTemplateFolderName} \
+          | yq e -P | helm template artifacts/k8s/${helmFolderName:=$HelmTemplateFolderName} \
           -n ${ns:$namespace} \
           --name-template tgs \
           -f -
