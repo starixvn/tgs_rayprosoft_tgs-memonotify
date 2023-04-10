@@ -76,7 +76,7 @@ export class NotifyScheduleComponent {
     private _snackBar: MatSnackBar
   ) {
     this.scheduleForm = this._fb.group({
-      scheduleDate: this.currentDate,
+      scheduleTime: this.currentDate,
       title: "",
       description: ""
     });
