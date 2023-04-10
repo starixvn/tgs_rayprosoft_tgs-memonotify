@@ -68,7 +68,7 @@ export class NotifyScheduleComponent {
   readonly separatorKeysCodes = [ENTER, COMMA] as const;
   scheduleForm: FormGroup;
   currentDate = moment(new Date().setSeconds(0));
-  brands: Set<string> = new Set<string>();
+  gpCodes: Set<string> = new Set<string>();
 
   constructor(
     private _fb: FormBuilder,
@@ -82,24 +82,24 @@ export class NotifyScheduleComponent {
     });
   }
 
-  addBrand(event: MatChipInputEvent) {
+  addGameProvider(event: MatChipInputEvent) {
     const value = (event.value || '').trim();
 
     if (value)
-      this.brands.add(value);
+      this.gpCodes.add(value);
 
     event.chipInput.clear();
   }
 
-  removeBrand(brandCode: string) {
-    this.brands.delete(brandCode);
+  removeGameProvider(brandCode: string) {
+    this.gpCodes.delete(brandCode);
   }
 
   async submit() {
     try {
       let scheduleRequest: MemoNotifyScheduleRequest = {
         ...this.scheduleForm.value,
-        brands: Array.from(this.brands)
+        gpCodes: Array.from(this.gpCodes)
       };
 
       await this._notifyService.scheduleMemoNotify(scheduleRequest);

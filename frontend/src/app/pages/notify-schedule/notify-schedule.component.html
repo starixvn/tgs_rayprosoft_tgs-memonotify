@@ -18,18 +18,18 @@
         <textarea matInput [rows]="5" formControlName="description"></textarea>
       </mat-form-field>
       <mat-form-field class="field brand">
-        <mat-label>Brand Code</mat-label>
+        <mat-label>GP Code</mat-label>
         <mat-chip-grid #chipGrid aria-label="Enter brand code">
-          <mat-chip-row *ngFor="let brandCode of brands" (removed)="removeBrand(brandCode)" [editable]="false"
-            [aria-description]="'press enter to edit ' + brandCode">
-            {{brandCode}}
-            <button matChipRemove [attr.aria-label]="'remove ' + brandCode">
+          <mat-chip-row *ngFor="let gpCode of gpCodes" (removed)="removeGameProvider(gpCode)" [editable]="false"
+            [aria-description]="'press enter to edit ' + gpCode">
+            {{gpCode}}
+            <button matChipRemove [attr.aria-label]="'remove ' + gpCode">
               <mat-icon>cancel</mat-icon>
             </button>
           </mat-chip-row>
           <input placeholder="New brand code..." [matChipInputFor]="chipGrid"
             [matChipInputSeparatorKeyCodes]="separatorKeysCodes" [matChipInputAddOnBlur]="true"
-            (matChipInputTokenEnd)="addBrand($event)" />
+            (matChipInputTokenEnd)="addGameProvider($event)" />
         </mat-chip-grid>
       </mat-form-field>
     </form>
