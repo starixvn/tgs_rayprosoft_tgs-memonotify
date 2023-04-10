@@ -33,11 +33,8 @@ builder.Logging
 builder.Services
 	.AddSingleton<IRequestContentHandler, GameServerModifierHandler>()
 	.AddGameServerClient(httpBuilder => httpBuilder
-		.ConfigureHttpClient(http =>
-		{
-			http.BaseAddress = builder.Configuration.GetValue<Uri>("MemoSettings:GameServerBaseUri");
-			http.DefaultRequestHeaders.Add("Modifier", "")
-		}))
+		.ConfigureHttpClient(http => http.BaseAddress =
+			builder.Configuration.GetValue<Uri>("MemoSettings:GameServerBaseUri")))
 	.AddHttpClient<ITelegramBotClient, TelegramBotClient>((httpClient) => new TelegramBotClient(
 		builder.Configuration.GetValue<string>("MemoSettings:Token")!,
 		httpClient));
