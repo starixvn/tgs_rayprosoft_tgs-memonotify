@@ -3,7 +3,7 @@
     <form [formGroup]="scheduleForm">
       <mat-form-field class="field">
         <mat-label>Schedule Date</mat-label>
-        <input matInput [ngxMatDatetimePicker]="picker" placeholder="Schedule a date" formControlName="scheduleDate"
+        <input matInput [ngxMatDatetimePicker]="picker" placeholder="Schedule a date" formControlName="scheduleTime"
           [min]="currentDate" />
         <mat-datepicker-toggle matSuffix [for]="$any(picker)"></mat-datepicker-toggle>
         <ngx-mat-datetime-picker #picker [showSeconds]="false">
