@@ -7,6 +7,12 @@ metadata:
     type: backend
     {{- include "tst-memo.labels" . | nindent 4 }}
 data:
+  appsettings.json: |
+    {
+      "MemoSettings": {
+        "GameServerBaseUri": "http://tgs-game-server"
+      }
+    }
   otel-collector-config.yaml: |
     receivers:
       otlp:

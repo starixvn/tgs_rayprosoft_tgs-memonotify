@@ -30,8 +30,11 @@ builder.Logging
 	});
 
 builder.Services
+	.AddGameServerClient(httpBuilder => httpBuilder
+		.ConfigureHttpClient(http => http.BaseAddress =
+			builder.Configuration.GetValue<Uri>("MemoSettings:GameServerBaseUri")))
 	.AddHttpClient<ITelegramBotClient, TelegramBotClient>((httpClient) => new TelegramBotClient(
-		builder.Configuration.GetValue<string>("Bot:Token")!,
+		builder.Configuration.GetValue<string>("MemoSettings:Token")!,
 		httpClient));
 
 builder.Services
@@ -42,7 +45,7 @@ builder.Services
 	{
 		_ = config.UseRecommendedSerializerSettings();
 
-		var storageType = builder.Configuration.GetValue<StorageType>("Schedule:StorageType");
+		var storageType = builder.Configuration.GetValue<StorageType>("MemoSettings:StorageType");
 
 #pragma warning disable IDE0045 // 轉換至條件運算式
 		if (storageType is StorageType.MongoDB)
