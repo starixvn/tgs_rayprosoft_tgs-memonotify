@@ -23,7 +23,7 @@ public class TstMemoNotifyHandler : IMessageHandler
 		_telegramBotClient = telegramBotClient ?? throw new ArgumentNullException(nameof(telegramBotClient));
 		_gameServerClient = gameServerClient ?? throw new ArgumentNullException(nameof(gameServerClient));
 		_logger = logger ?? throw new ArgumentNullException(nameof(logger));
-		_chatId = new ChatId(configuration.GetValue<long>("Bot:TstChatId"));
+		_chatId = new ChatId(configuration.GetValue<long>("MemoSettings:TstChatId"));
 	}
 
 	public async ValueTask HandleAsync(ReadOnlyMemory<byte> data, CancellationToken cancellationToken = default)
