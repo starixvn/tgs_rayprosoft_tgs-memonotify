@@ -102,7 +102,10 @@ app.UseResponseCompression();
 app.UseDefaultFiles();
 app.UseStaticFiles();
 app.MapControllers();
-app.MapHangfireDashboard();
+app.MapHangfireDashboard(options: new DashboardOptions
+{
+	AsyncAuthorization = new[] { new AnonymousHangfireAuthorization() }
+});
 app.MapHealthChecks("/healthz");
 app.UseSwaggerUI();
 app.MapSwagger();
