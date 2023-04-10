@@ -8,8 +8,7 @@ FROM node:18.15.0-alpine3.17 AS nodejs
 WORKDIR /src
 COPY ["frontend", "frontend/"]
 COPY ["browser_client", "browser_client/"]
-RUN npm ci --prefix browser_client
-RUN npm run build --prefix browser_client
+RUN npm ci --prefix browser_client && npm run build --prefix browser_client
 RUN npm ci --prefix frontend
 WORKDIR /src/frontend
 RUN npx ng build
