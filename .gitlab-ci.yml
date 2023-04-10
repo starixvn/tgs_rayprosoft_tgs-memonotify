@@ -20,7 +20,7 @@ build-code:
   extends: .build-code-template
   script:
     - npm ci --prefix browser_client
-    - npm run build --prefix browser_client
+    - npm run build-test --prefix browser_client
     - dotnet build -c $BuildConfiguration
 
 unit-test:
