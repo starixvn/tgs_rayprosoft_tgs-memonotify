@@ -9,8 +9,8 @@ WORKDIR /src
 COPY ["frontend", "frontend/"]
 COPY ["browser_client", "browser_client/"]
 RUN npm ci --prefix browser_client
-RUN npm ci --prefix frontend
 RUN npm run build --prefix browser_client
+RUN npm ci --prefix frontend
 WORKDIR /src/frontend
 RUN npx ng build
 
