@@ -8,6 +8,7 @@ using OpenTelemetry.Metrics;
 using OpenTelemetry.Resources;
 using OpenTelemetry.Trace;
 using Telegram.Bot;
+using Tgs.GameServer.Clients;
 using Tgs.MemoNotify;
 using Tgs.MemoNotify.MessageQueue;
 
@@ -30,9 +31,13 @@ builder.Logging
 	});
 
 builder.Services
+	.AddSingleton<IRequestContentHandler, GameServerModifierHandler>()
 	.AddGameServerClient(httpBuilder => httpBuilder
-		.ConfigureHttpClient(http => http.BaseAddress =
-			builder.Configuration.GetValue<Uri>("MemoSettings:GameServerBaseUri")))
+		.ConfigureHttpClient(http =>
+		{
+			http.BaseAddress = builder.Configuration.GetValue<Uri>("MemoSettings:GameServerBaseUri");
+			http.DefaultRequestHeaders.Add("Modifier", "")
+		}))
 	.AddHttpClient<ITelegramBotClient, TelegramBotClient>((httpClient) => new TelegramBotClient(
 		builder.Configuration.GetValue<string>("MemoSettings:Token")!,
 		httpClient));
