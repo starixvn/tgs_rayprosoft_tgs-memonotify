@@ -64,6 +64,7 @@ builder.Services
 							MigrationStrategy = new MigrateMongoMigrationStrategy(),
 							BackupStrategy = new CollectionMongoBackupStrategy()
 						},
+						MigrationLockTimeout = TimeSpan.FromMinutes(5),
 						CheckQueuedJobsStrategy = CheckQueuedJobsStrategy.TailNotificationsCollection
 					});
 				break;
