@@ -22,7 +22,7 @@ public class SchedulerController : ControllerBase
 
 		return backgroundJobClient.Schedule<NotifyScheduleJob>(
 			job => job.ExecuteAsync(
-				$"Schedule Notify - {viewModel.Title} - {Guid.NewGuid()}",
+				$"Notify - {viewModel.Title}",
 				"tgs.tst.notify",
 				viewModel.ScheduleTime,
 				payload,
