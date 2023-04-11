@@ -137,7 +137,7 @@ deploy-staging:
             "enabled": true,
             "hosts": [
               {
-                "host": "dev-memo.rpgp.cc",
+                "host": "stg-memo.rpgp.cc",
                 "paths": [
                   {
                     "path": "/",
@@ -169,12 +169,12 @@ deploy-prod:
     - |
       cat << EOF | deploy_k8s $TgsSettingKey $HelmTemplateFolderName $namespace 
         {
-          "storageType": "MongoDB",
+          "storageType": "Redis",
           "ingress": {
             "enabled": true,
             "hosts": [
               {
-                "host": "dev-memo.rpgp.cc",
+                "host": "memo.srvptt.com",
                 "paths": [
                   {
                     "path": "/",

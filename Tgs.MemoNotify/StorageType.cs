@@ -3,5 +3,5 @@
 public enum StorageType
 {
 	Memory,
-	MongoDB
+	Redis
 }

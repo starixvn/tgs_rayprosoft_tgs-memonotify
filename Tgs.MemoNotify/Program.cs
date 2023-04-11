@@ -1,7 +1,7 @@
 ﻿using FluentdForward.OpenTelemetry.MessagePack;
 using Hangfire;
 using Hangfire.MemoryStorage;
-using Hangfire.Mongo;
+using Hangfire.Redis.StackExchange;
 using Microsoft.OpenApi.Models;
 using OpenTelemetry.Instrumentation.AspNetCore;
 using OpenTelemetry.Metrics;
@@ -49,12 +49,21 @@ builder.Services
 
 		var storageType = builder.Configuration.GetValue<StorageType>("MemoSettings:StorageType");
 
-#pragma warning disable IDE0045 // 轉換至條件運算式
-		if (storageType is StorageType.MongoDB)
-			_ = config.UseMongoStorage(builder.Configuration.GetConnectionString("Hangfire"));
-		else
-			_ = config.UseMemoryStorage();
-#pragma warning restore IDE0045 // 轉換至條件運算式
+		switch (storageType)
+		{
+			case StorageType.Redis:
+				_ = config.UseRedisStorage(
+					builder.Configuration.GetConnectionString("Hangfire")!,
+					new RedisStorageOptions
+					{
+						Prefix = "hangfire:TstMemo:"
+					});
+				break;
+
+			case StorageType.Memory:
+				_ = config.UseMemoryStorage();
+				break;
+		}
 	})
 	.AddHangfireServer();
 
