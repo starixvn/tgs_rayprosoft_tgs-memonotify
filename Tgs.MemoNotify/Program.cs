@@ -1,6 +1,9 @@
 ﻿using FluentdForward.OpenTelemetry.MessagePack;
 using Hangfire;
 using Hangfire.MemoryStorage;
+using Hangfire.Mongo;
+using Hangfire.Mongo.Migration.Strategies;
+using Hangfire.Mongo.Migration.Strategies.Backup;
 using Hangfire.Redis.StackExchange;
 using Microsoft.OpenApi.Models;
 using OpenTelemetry.Instrumentation.AspNetCore;
@@ -51,12 +54,17 @@ builder.Services
 
 		switch (storageType)
 		{
-			case StorageType.Redis:
-				_ = config.UseRedisStorage(
+			case StorageType.MongoDB:
+				_ = config.UseMongoStorage(
 					builder.Configuration.GetConnectionString("Hangfire")!,
-					new RedisStorageOptions
+					new MongoStorageOptions
 					{
-						Prefix = "hangfire:TstMemo:"
+						MigrationOptions = new MongoMigrationOptions
+						{
+							MigrationStrategy = new MigrateMongoMigrationStrategy(),
+							BackupStrategy = new CollectionMongoBackupStrategy()
+						},
+						CheckQueuedJobsStrategy = CheckQueuedJobsStrategy.TailNotificationsCollection
 					});
 				break;
 
