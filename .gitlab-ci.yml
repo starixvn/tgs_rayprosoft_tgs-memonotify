@@ -159,7 +159,7 @@ deploy-prod:
     name: prod
   stage: deploy-prod
   needs:
-    - deploy-staging
+    - deploy-dev
     - job: push-k8s-template
       artifacts: true
   only:
@@ -169,7 +169,7 @@ deploy-prod:
     - |
       cat << EOF | deploy_k8s $TgsSettingKey $HelmTemplateFolderName $namespace 
         {
-          "storageType": "Memory",
+          "storageType": "MongoDB",
           "ingress": {
             "enabled": true,
             "hosts": [

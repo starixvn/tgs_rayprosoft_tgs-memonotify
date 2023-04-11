@@ -45,6 +45,12 @@ spec:
                 secretKeyRef:
                   name: tgs-connections
                   key: nats
+            - name: ConnectionStrings__Hangfire
+              valueFrom:
+                secretKeyRef:
+                  name: tgs-connections
+                  key: mongo-tst-memo
+                  optional: true
             - name: MemoSettings__StorageType
               value: {{ .Values.storageType }}
           ports:
