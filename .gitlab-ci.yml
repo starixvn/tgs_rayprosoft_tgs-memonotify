@@ -1,4 +1,4 @@
-﻿include:
+include:
   - project: rayprosoft/tgs-ci-scripts
     ref: main
     file: GitLab/Templates/gitlab-job-templates.yml
