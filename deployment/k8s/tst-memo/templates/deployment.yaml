@@ -49,7 +49,7 @@ spec:
               valueFrom:
                 secretKeyRef:
                   name: tgs-connections
-                  key: mongo-tst-memo
+                  key: redis
                   optional: true
             - name: MemoSettings__StorageType
               value: {{ .Values.storageType }}

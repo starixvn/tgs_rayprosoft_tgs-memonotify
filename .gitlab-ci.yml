@@ -1,4 +1,4 @@
-include:
+﻿include:
   - project: rayprosoft/tgs-ci-scripts
     ref: main
     file: GitLab/Templates/gitlab-job-templates.yml
@@ -169,7 +169,7 @@ deploy-prod:
     - |
       cat << EOF | deploy_k8s $TgsSettingKey $HelmTemplateFolderName $namespace 
         {
-          "storageType": "MongoDB",
+          "storageType": "Redis",
           "ingress": {
             "enabled": true,
             "hosts": [

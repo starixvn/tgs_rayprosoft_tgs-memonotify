@@ -69,6 +69,15 @@ builder.Services
 					});
 				break;
 
+			case StorageType.Redis:
+				_ = config.UseRedisStorage(
+					builder.Configuration.GetConnectionString("Hangfire")!,
+					new RedisStorageOptions
+					{
+						Prefix = "hangfire:TstMemo"
+					});
+				break;
+
 			case StorageType.Memory:
 				_ = config.UseMemoryStorage();
 				break;
