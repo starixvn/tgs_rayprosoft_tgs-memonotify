@@ -104,7 +104,13 @@ export class NotifyScheduleComponent {
 
       await this._notifyService.scheduleMemoNotify(scheduleRequest);
 
-      this._snackBar.open("Notify memoed!");
+      this._snackBar.open(
+        "Notify memoed!",
+        undefined,
+        {
+          duration: 3000,
+          verticalPosition: "top"
+        });
     }
     catch (error) {
       console.error(error);
