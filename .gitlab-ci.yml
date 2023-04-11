@@ -1,4 +1,4 @@
-include:
+﻿include:
   - project: rayprosoft/tgs-ci-scripts
     ref: main
     file: GitLab/Templates/gitlab-job-templates.yml
@@ -159,7 +159,7 @@ deploy-prod:
     name: prod
   stage: deploy-prod
   needs:
-    - deploy-dev
+    - deploy-staging
     - job: push-k8s-template
       artifacts: true
   only:
@@ -169,7 +169,7 @@ deploy-prod:
     - |
       cat << EOF | deploy_k8s $TgsSettingKey $HelmTemplateFolderName $namespace 
         {
-          "storageType": "Redis",
+          "storageType": "MongoDB",
           "ingress": {
             "enabled": true,
             "hosts": [
