@@ -10,7 +10,9 @@ data:
   appsettings.json: |
     {
       "MemoSettings": {
-        "GameServerBaseUri": "http://tgs-game-server"
+        "GameServerBaseUri": "http://tgs-game-server",
+        "Token": "{{ .Values.botToken }}",
+        "TstChatId": "{{ .Values.chatId }}"
       }
     }
   otel-collector-config.yaml: |
