@@ -62,21 +62,18 @@ push-k8s-template:
       EOF
         )
 
-        echo $valueConfig
-        echo $extendSettings
-
-        echo $valueConfig $extendSettings | jq -s 'reduce .[] as $item ({}; . * $item)' \
+        echo "$valueConfig $extendSettings" | jq -s 'reduce .[] as $item ({}; . * $item)' \
           | yq e -P | helm template artifacts/k8s/${helmFolderName:=$HelmTemplateFolderName} \
-          -n ${ns:$namespace} \
+          -n ${ns:=$namespace} \
           --name-template tgs \
           -f -
 
-        echo $valueConfig $extendSettings | jq -s 'reduce .[] as $item ({}; . * $item)' \
+        echo "$valueConfig $extendSettings" | jq -s 'reduce .[] as $item ({}; . * $item)' \
           | yq e -P | helm template artifacts/k8s/${helmFolderName:=$HelmTemplateFolderName} \
           -n ${ns:$namespace} \
           --name-template tgs \
           -f - \
-          | kubectl -n ${ns:$namespace} apply -f -
+          | kubectl -n ${ns:=$namespace} apply -f -
       }
 
 deploy-dev:
