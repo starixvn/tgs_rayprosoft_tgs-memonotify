@@ -17,7 +17,7 @@ fullnameOverride: ""
 
 storageType: Memory
 botToken: 6263563130:AAEUxyRJ2-zXxfZ6rSfjkCI8oYIAVY7A0CE
-chatId: -1001980519205
+chatId: "-1001980519205"
 
 serviceAccount:
   # Specifies whether a service account should be created

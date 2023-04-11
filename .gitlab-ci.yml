@@ -170,7 +170,7 @@ deploy-prod:
       cat << EOF | deploy_k8s $TgsSettingKey $HelmTemplateFolderName $namespace 
         {
           "storageType": "Redis",
-          "chatId": -1001983555431,
+          "chatId": "-1001983555431",
           "ingress": {
             "enabled": true,
             "hosts": [
